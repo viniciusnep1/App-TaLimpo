@@ -9,51 +9,49 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.Description;
-using TaLimpoApp.Models;
+using app_talimpo.Models;
 
-namespace TaLimpoApp.Controllers
+namespace app_talimpo.Controllers
 {
-  [EnableCors(origins: "*", headers: "*", methods: "*")]
-  public class ProdutosController : ApiController
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
+    public class LoginModelsController : ApiController
     {
-        private TaLimpoAppContext db = new TaLimpoAppContext();
+        private app_talimpoContext db = new app_talimpoContext();
 
-        // GET: api/Produtos
-        public IQueryable<Produto> GetProdutos()
+        // GET: api/LoginModels
+        public IQueryable<LoginModel> GetLogin()
         {
-            return db.Produtos;
+            return db.Login;
         }
 
-        // GET: api/Produtos/5
-        [ResponseType(typeof(Produto))]
-        public IHttpActionResult GetProduto(Guid id)
+        // GET: api/LoginModels/5
+        [ResponseType(typeof(LoginModel))]
+        public IHttpActionResult GetLoginModel(Guid id)
         {
-            Produto produto = db.Produtos.Find(id);
-            
-
-            if (produto == null)
+            LoginModel loginModel = db.Login.Find(id);
+            if (loginModel == null)
             {
                 return NotFound();
             }
 
-            return Ok(produto);
+            return Ok(loginModel);
         }
 
-        // PUT: api/Produtos/5
+        // PUT: api/LoginModels/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutProduto(Guid id, Produto produto)
+        public IHttpActionResult PutLoginModel(Guid id, LoginModel loginModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != produto.Id)
+            if (id != loginModel.Id)
             {
                 return BadRequest();
             }
 
-            db.Entry(produto).State = EntityState.Modified;
+            db.Entry(loginModel).State = EntityState.Modified;
 
             try
             {
@@ -61,7 +59,7 @@ namespace TaLimpoApp.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProdutoExists(id))
+                if (!LoginModelExists(id))
                 {
                     return NotFound();
                 }
@@ -74,16 +72,16 @@ namespace TaLimpoApp.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Produtos
-        [ResponseType(typeof(Produto))]
-        public IHttpActionResult PostProduto(Produto produto)
+        // POST: api/LoginModels
+        [ResponseType(typeof(LoginModel))]
+        public IHttpActionResult PostLoginModel(LoginModel loginModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Produtos.Add(produto);
+            db.Login.Add(loginModel);
 
             try
             {
@@ -91,7 +89,7 @@ namespace TaLimpoApp.Controllers
             }
             catch (DbUpdateException)
             {
-                if (ProdutoExists(produto.Id))
+                if (LoginModelExists(loginModel.Id))
                 {
                     return Conflict();
                 }
@@ -101,23 +99,23 @@ namespace TaLimpoApp.Controllers
                 }
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = produto.Id }, produto);
+            return CreatedAtRoute("DefaultApi", new { id = loginModel.Id }, loginModel);
         }
 
-        // DELETE: api/Produtos/5
-        [ResponseType(typeof(Produto))]
-        public IHttpActionResult DeleteProduto(Guid id)
+        // DELETE: api/LoginModels/5
+        [ResponseType(typeof(LoginModel))]
+        public IHttpActionResult DeleteLoginModel(Guid id)
         {
-            Produto produto = db.Produtos.Find(id);
-            if (produto == null)
+            LoginModel loginModel = db.Login.Find(id);
+            if (loginModel == null)
             {
                 return NotFound();
             }
 
-            db.Produtos.Remove(produto);
+            db.Login.Remove(loginModel);
             db.SaveChanges();
 
-            return Ok(produto);
+            return Ok(loginModel);
         }
 
         protected override void Dispose(bool disposing)
@@ -129,9 +127,9 @@ namespace TaLimpoApp.Controllers
             base.Dispose(disposing);
         }
 
-        private bool ProdutoExists(Guid id)
+        private bool LoginModelExists(Guid id)
         {
-            return db.Produtos.Count(e => e.Id == id) > 0;
+            return db.Login.Count(e => e.Id == id) > 0;
         }
     }
 }

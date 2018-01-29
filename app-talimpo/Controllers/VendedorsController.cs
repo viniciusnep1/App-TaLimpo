@@ -9,51 +9,49 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.Description;
-using TaLimpoApp.Models;
+using app_talimpo.Models;
 
-namespace TaLimpoApp.Controllers
+namespace app_talimpo.Controllers
 {
   [EnableCors(origins: "*", headers: "*", methods: "*")]
-  public class ProdutosController : ApiController
+    public class VendedorsController : ApiController
     {
-        private TaLimpoAppContext db = new TaLimpoAppContext();
+        private app_talimpoContext db = new app_talimpoContext();
 
-        // GET: api/Produtos
-        public IQueryable<Produto> GetProdutos()
+        // GET: api/Vendedors
+        public IQueryable<Vendedor> GetVendedors()
         {
-            return db.Produtos;
+            return db.Vendedors;
         }
 
-        // GET: api/Produtos/5
-        [ResponseType(typeof(Produto))]
-        public IHttpActionResult GetProduto(Guid id)
+        // GET: api/Vendedors/5
+        [ResponseType(typeof(Vendedor))]
+        public IHttpActionResult GetVendedor(Guid id)
         {
-            Produto produto = db.Produtos.Find(id);
-            
-
-            if (produto == null)
+            Vendedor vendedor = db.Vendedors.Find(id);
+            if (vendedor == null)
             {
                 return NotFound();
             }
 
-            return Ok(produto);
+            return Ok(vendedor);
         }
 
-        // PUT: api/Produtos/5
+        // PUT: api/Vendedors/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutProduto(Guid id, Produto produto)
+        public IHttpActionResult PutVendedor(Guid id, Vendedor vendedor)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != produto.Id)
+            if (id != vendedor.Id)
             {
                 return BadRequest();
             }
 
-            db.Entry(produto).State = EntityState.Modified;
+            db.Entry(vendedor).State = EntityState.Modified;
 
             try
             {
@@ -61,7 +59,7 @@ namespace TaLimpoApp.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProdutoExists(id))
+                if (!VendedorExists(id))
                 {
                     return NotFound();
                 }
@@ -74,16 +72,16 @@ namespace TaLimpoApp.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Produtos
-        [ResponseType(typeof(Produto))]
-        public IHttpActionResult PostProduto(Produto produto)
+        // POST: api/Vendedors
+        [ResponseType(typeof(Vendedor))]
+        public IHttpActionResult PostVendedor(Vendedor vendedor)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Produtos.Add(produto);
+            db.Vendedors.Add(vendedor);
 
             try
             {
@@ -91,7 +89,7 @@ namespace TaLimpoApp.Controllers
             }
             catch (DbUpdateException)
             {
-                if (ProdutoExists(produto.Id))
+                if (VendedorExists(vendedor.Id))
                 {
                     return Conflict();
                 }
@@ -101,23 +99,23 @@ namespace TaLimpoApp.Controllers
                 }
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = produto.Id }, produto);
+            return CreatedAtRoute("DefaultApi", new { id = vendedor.Id }, vendedor);
         }
 
-        // DELETE: api/Produtos/5
-        [ResponseType(typeof(Produto))]
-        public IHttpActionResult DeleteProduto(Guid id)
+        // DELETE: api/Vendedors/5
+        [ResponseType(typeof(Vendedor))]
+        public IHttpActionResult DeleteVendedor(Guid id)
         {
-            Produto produto = db.Produtos.Find(id);
-            if (produto == null)
+            Vendedor vendedor = db.Vendedors.Find(id);
+            if (vendedor == null)
             {
                 return NotFound();
             }
 
-            db.Produtos.Remove(produto);
+            db.Vendedors.Remove(vendedor);
             db.SaveChanges();
 
-            return Ok(produto);
+            return Ok(vendedor);
         }
 
         protected override void Dispose(bool disposing)
@@ -129,9 +127,9 @@ namespace TaLimpoApp.Controllers
             base.Dispose(disposing);
         }
 
-        private bool ProdutoExists(Guid id)
+        private bool VendedorExists(Guid id)
         {
-            return db.Produtos.Count(e => e.Id == id) > 0;
+            return db.Vendedors.Count(e => e.Id == id) > 0;
         }
     }
 }

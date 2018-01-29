@@ -9,51 +9,49 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.Description;
-using TaLimpoApp.Models;
+using app_talimpo.Models;
 
-namespace TaLimpoApp.Controllers
+namespace app_talimpo.Controllers
 {
   [EnableCors(origins: "*", headers: "*", methods: "*")]
-  public class ProdutosController : ApiController
+  public class MateriaPrimasController : ApiController
     {
-        private TaLimpoAppContext db = new TaLimpoAppContext();
+        private app_talimpoContext db = new app_talimpoContext();
 
-        // GET: api/Produtos
-        public IQueryable<Produto> GetProdutos()
+        // GET: api/MateriaPrimas
+        public IQueryable<MateriaPrima> GetMateriaPrimas()
         {
-            return db.Produtos;
+            return db.MateriaPrimas;
         }
 
-        // GET: api/Produtos/5
-        [ResponseType(typeof(Produto))]
-        public IHttpActionResult GetProduto(Guid id)
+        // GET: api/MateriaPrimas/5
+        [ResponseType(typeof(MateriaPrima))]
+        public IHttpActionResult GetMateriaPrima(Guid id)
         {
-            Produto produto = db.Produtos.Find(id);
-            
-
-            if (produto == null)
+            MateriaPrima materiaPrima = db.MateriaPrimas.Find(id);
+            if (materiaPrima == null)
             {
                 return NotFound();
             }
 
-            return Ok(produto);
+            return Ok(materiaPrima);
         }
 
-        // PUT: api/Produtos/5
+        // PUT: api/MateriaPrimas/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutProduto(Guid id, Produto produto)
+        public IHttpActionResult PutMateriaPrima(Guid id, MateriaPrima materiaPrima)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != produto.Id)
+            if (id != materiaPrima.Id)
             {
                 return BadRequest();
             }
 
-            db.Entry(produto).State = EntityState.Modified;
+            db.Entry(materiaPrima).State = EntityState.Modified;
 
             try
             {
@@ -61,7 +59,7 @@ namespace TaLimpoApp.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProdutoExists(id))
+                if (!MateriaPrimaExists(id))
                 {
                     return NotFound();
                 }
@@ -74,16 +72,16 @@ namespace TaLimpoApp.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Produtos
-        [ResponseType(typeof(Produto))]
-        public IHttpActionResult PostProduto(Produto produto)
+        // POST: api/MateriaPrimas
+        [ResponseType(typeof(MateriaPrima))]
+        public IHttpActionResult PostMateriaPrima(MateriaPrima materiaPrima)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Produtos.Add(produto);
+            db.MateriaPrimas.Add(materiaPrima);
 
             try
             {
@@ -91,7 +89,7 @@ namespace TaLimpoApp.Controllers
             }
             catch (DbUpdateException)
             {
-                if (ProdutoExists(produto.Id))
+                if (MateriaPrimaExists(materiaPrima.Id))
                 {
                     return Conflict();
                 }
@@ -101,23 +99,23 @@ namespace TaLimpoApp.Controllers
                 }
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = produto.Id }, produto);
+            return CreatedAtRoute("DefaultApi", new { id = materiaPrima.Id }, materiaPrima);
         }
 
-        // DELETE: api/Produtos/5
-        [ResponseType(typeof(Produto))]
-        public IHttpActionResult DeleteProduto(Guid id)
+        // DELETE: api/MateriaPrimas/5
+        [ResponseType(typeof(MateriaPrima))]
+        public IHttpActionResult DeleteMateriaPrima(Guid id)
         {
-            Produto produto = db.Produtos.Find(id);
-            if (produto == null)
+            MateriaPrima materiaPrima = db.MateriaPrimas.Find(id);
+            if (materiaPrima == null)
             {
                 return NotFound();
             }
 
-            db.Produtos.Remove(produto);
+            db.MateriaPrimas.Remove(materiaPrima);
             db.SaveChanges();
 
-            return Ok(produto);
+            return Ok(materiaPrima);
         }
 
         protected override void Dispose(bool disposing)
@@ -129,9 +127,9 @@ namespace TaLimpoApp.Controllers
             base.Dispose(disposing);
         }
 
-        private bool ProdutoExists(Guid id)
+        private bool MateriaPrimaExists(Guid id)
         {
-            return db.Produtos.Count(e => e.Id == id) > 0;
+            return db.MateriaPrimas.Count(e => e.Id == id) > 0;
         }
     }
 }
