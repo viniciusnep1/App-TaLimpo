@@ -230,6 +230,10 @@
     <Compile Include="Migrations\201712152337199_pessoas.Designer.cs">
       <DependentUpon>201712152337199_pessoas.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201801300213201_fix.cs" />
+    <Compile Include="Migrations\201801300213201_fix.Designer.cs">
+      <DependentUpon>201801300213201_fix.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Cliente.cs" />
     <Compile Include="Models\Gerente.cs" />
@@ -332,6 +336,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201712152337199_pessoas.resx">
       <DependentUpon>201712152337199_pessoas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801300213201_fix.resx">
+      <DependentUpon>201801300213201_fix.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
